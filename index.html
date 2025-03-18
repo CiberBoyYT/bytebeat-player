@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bytebeat Player by CiberBoy</title>
+    <style>
+        body {
+         font-family: 'Arial', sans-serif;
+         text-align: center;
+         margin: 0;
+         padding: 0;
+         height: 100vh;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         background: linear-gradient(45deg, #00b3b3, #b3ff66); 
+         background-size: 400% 400%;
+         animation: gradientMove 10s ease infinite; 
+         color: white;
+        }
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .container {
+            max-width: 600px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5rem;
+            color: #00ff00;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px cyan, 0 0 30px cyan;
+        }
+        h1 img {
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+        label {
+            font-size: 18px;
+            margin-top: 15px;
+            display: block;
+            color: #ddd;
+        }
+        textarea {
+            margin-top: 10px;
+            width: 90%;
+            height: 120px;
+            background: #222;
+            color: #00ff00;
+            font-family: monospace;
+            font-size: 16px;
+            border: 2px solid #00ff00;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px #00ff00;
+            outline: none;
+            transition: 0.3s;
+        }
+        textarea:focus {
+            box-shadow: 0 0 25px #00ff00;
+        }
+        select, button {
+            margin: 10px;
+            padding: 12px 20px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+        select {
+            background: #222;
+            color: white;
+            border: 2px solid #00ffcc;
+            box-shadow: 0 0 10px #00ffcc;
+        }
+        button {
+            background: linear-gradient(45deg, #007bff, #00ffcc);
+            color: black;
+            font-weight: bold;
+            box-shadow: 0 0 10px #00ffcc;
+        }
+        button:hover {
+            background: linear-gradient(45deg, #00ffcc, #007bff);
+            box-shadow: 0 0 20px #00ffcc;
+        }
+        .footer {
+            font-size: 22px;
+            color: #777;
+            margin-top: 30px;
+        }
+        .footer a {
+            color: #00ffcc;
+            text-decoration: none;
+        }
+        @media screen and (max-width: 768px) {
+            .container {
+                width: 90%;
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><img src="music.png" alt="icon" width="40"> Bytebeat Player</h1>
+        <label><strong>Type your formula below:</strong></label><br>
+        <textarea id="formula">t*(t&16384?6:5)*(4-(1&t>>8))>>(3&t>>8)|t>>4</textarea><br>
+        <label><strong>Sample Rate:</strong></label>
+        <select id="sampleRate">
+            <option value="8000" selected>8 kHz</option>
+            <option value="12000">12 kHz</option>
+            <option value="16000">16 kHz</option>
+            <option value="22050">22.05 kHz</option>
+            <option value="32000">32 kHz</option>
+            <option value="44100">44.1 kHz</option>
+        </select><br>
+        <button onclick="play()">▶ Play</button>
+        <button onclick="stop()">⏹ Stop</button>
+        <div class="footer">
+            <p>By <a href="https://youtube.com/@ciberboyyt" target="_blank">CiberBoy</a></p>
+        </div>
+    </div>
+    <script>
+        let audioCtx, scriptNode, t = 0, sampleRate = 8000;
+        function play() {
+            if (audioCtx) return; 
+            sampleRate = parseInt(document.getElementById("sampleRate").value);
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: sampleRate });
+            scriptNode = audioCtx.createScriptProcessor(1024, 1, 1);
+            let formula = document.getElementById("formula").value;
+            scriptNode.onaudioprocess = function (e) {
+                let buffer = e.outputBuffer.getChannelData(0);
+                for (let i = 0; i < buffer.length; i++, t++) {
+                    try {
+                        buffer[i] = ((eval(formula) & 255) / 128) - 1; 
+                    } catch (error) {
+                        buffer[i] = 0; 
+                    }
+                }
+            };
+            scriptNode.connect(audioCtx.destination);
+        }
+        function stop() {
+            if (scriptNode) scriptNode.disconnect();
+            if (audioCtx) audioCtx.close();
+            audioCtx = null;
+            t = 0; 
+        }
+    </script>
+</body>
+</html>
