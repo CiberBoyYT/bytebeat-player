@@ -1,163 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bytebeat Player by CiberBoy</title>
-    <style>
-        body {
-         font-family: 'Arial', sans-serif;
-         text-align: center;
-         margin: 0;
-         padding: 0;
-         height: 100vh;
-         display: flex;
-         justify-content: center;
-         align-items: center;
-         background: linear-gradient(45deg, #00b3b3, #b3ff66); 
-         background-size: 400% 400%;
-         animation: gradientMove 10s ease infinite; 
-         color: white;
-        }
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        .container {
-            max-width: 600px;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
-            width: 100%;
-            text-align: center;
-        }
-        h1 {
-            font-size: 2.5rem;
-            color: #00ff00;
-            margin-bottom: 20px;
-            text-shadow: 0 0 15px cyan, 0 0 30px cyan;
-        }
-        h1 img {
-            vertical-align: middle;
-            margin-right: 10px;
-        }
-        label {
-            font-size: 18px;
-            margin-top: 15px;
-            display: block;
-            color: #ddd;
-        }
-        textarea {
-            margin-top: 10px;
-            width: 90%;
-            height: 120px;
-            background: #222;
-            color: #00ff00;
-            font-family: monospace;
-            font-size: 16px;
-            border: 2px solid #00ff00;
-            padding: 10px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px #00ff00;
-            outline: none;
-            transition: 0.3s;
-        }
-        textarea:focus {
-            box-shadow: 0 0 25px #00ff00;
-        }
-        select, button {
-            margin: 10px;
-            padding: 12px 20px;
-            font-size: 18px;
-            border: none;
-            cursor: pointer;
-            border-radius: 10px;
-            transition: 0.3s;
-        }
-        select {
-            background: #222;
-            color: white;
-            border: 2px solid #00ffcc;
-            box-shadow: 0 0 10px #00ffcc;
-        }
-        button {
-            background: linear-gradient(45deg, #007bff, #00ffcc);
-            color: black;
-            font-weight: bold;
-            box-shadow: 0 0 10px #00ffcc;
-        }
-        button:hover {
-            background: linear-gradient(45deg, #00ffcc, #007bff);
-            box-shadow: 0 0 20px #00ffcc;
-        }
-        .footer {
-            font-size: 22px;
-            color: #777;
-            margin-top: 30px;
-        }
-        .footer a {
-            color: #00ffcc;
-            text-decoration: none;
-        }
-        @media screen and (max-width: 768px) {
-            .container {
-                width: 90%;
-                padding: 20px;
-            }
-            h1 {
-                font-size: 2rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bytebeat Player by CiberBoy</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at center, #111, #1a1a1a, #000);
+      overflow: hidden;
+      color: #fff;
+    }
+    canvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+    .container {
+      position: relative;
+      z-index: 2;
+      padding: 50px;
+      border-radius: 20px;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(15px);
+      box-shadow: 0 0 30px rgba(255,255,255,0.05);
+      text-align: center;
+      max-width: 800px;
+      width: 90%;
+      animation: fadeIn 1.5s ease-in;
+    }
+    h1 {
+      font-size: 3.5rem;
+      color: #ffea00;
+      text-shadow: 0 0 10px #ffea00, 0 0 30px #ffea00;
+      margin-bottom: 20px;
+    }
+    label {
+      font-size: 1.2rem;
+      color: #ccc;
+      margin-top: 15px;
+      display: block;
+    }
+    textarea {
+      margin-top: 10px;
+      width: 100%;
+      height: 120px;
+      background: #111;
+      color: #37bee7;
+      font-family: monospace;
+      font-size: 16px;
+      border: 2px solid #37bee7;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #0051ff;
+      outline: none;
+      resize: none;
+    }
+    select {
+      background: #111;
+      color: #00ffff;
+      border: 2px solid #00ffff;
+      padding: 10px 20px;
+      font-size: 20px;
+      margin-top: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #00ffff;
+    }
+    .button-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 30px;
+    }
+    .btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 19px;
+      cursor: pointer;
+      transition: all 0.25s ease-in-out;
+      backdrop-filter: blur(5px);
+    }
+    .btn:hover {
+      transform: translateY(-4px);
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow:
+        0 0 10px rgba(255, 255, 255, 0.2),
+        0 0 20px rgba(255, 255, 255, 0.3),
+        0 0 40px rgba(255, 255, 255, 0.4);
+      text-shadow: 0 0 8px white;
+    }
+    .footer {
+      margin-top: 30px;
+      font-size: 1.8rem;
+      color: #aaa;
+    }
+    .footer a {
+      color: #00ffff;
+      text-decoration: none;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @media (max-width: 600px) {
+      h1 { font-size: 2.5rem; }
+      .btn { font-size: 14px; padding: 10px 16px; }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1><img src="music.png" alt="icon" width="40"> Bytebeat Player</h1>
-        <label><strong>Type your formula below:</strong></label><br>
-        <textarea id="formula">t*(t&16384?6:5)*(4-(1&t>>8))>>(3&t>>8)|t>>4</textarea><br>
-        <label><strong>Sample Rate:</strong></label>
-        <select id="sampleRate">
-            <option value="8000" selected>8 kHz</option>
-            <option value="12000">12 kHz</option>
-            <option value="16000">16 kHz</option>
-            <option value="22050">22.05 kHz</option>
-            <option value="32000">32 kHz</option>
-            <option value="44100">44.1 kHz</option>
-        </select><br>
-        <button onclick="play()">▶ Play</button>
-        <button onclick="stop()">⏹ Stop</button>
-        <div class="footer">
-            <p>By <a href="https://youtube.com/@ciberboyyt" target="_blank">CiberBoy</a></p>
-        </div>
+  <div class="container">
+    <h1>🎵 Bytebeat Player</h1>
+    <label><strong>Type your formula below:</strong></label>
+    <textarea id="formula">t*(t&16384?6:5)*(4-(1&t>>8))>>(3&t>>8)|t>>4</textarea>
+
+    <label><strong>Sample Rate:</strong></label>
+    <select id="sampleRate">
+      <option value="8000" selected>8 kHz</option>
+      <option value="12000">12 kHz</option>
+      <option value="16000">16 kHz</option>
+      <option value="22050">22.05 kHz</option>
+      <option value="32000">32 kHz</option>
+      <option value="44100">44.1 kHz</option>
+    </select>
+
+    <div class="button-container">
+      <button class="btn" onclick="play()">▶ Play</button>
+      <button class="btn" onclick="stop()">⏹ Stop</button>
     </div>
-    <script>
-        let audioCtx, scriptNode, t = 0, sampleRate = 8000;
-        function play() {
-            if (audioCtx) return; 
-            sampleRate = parseInt(document.getElementById("sampleRate").value);
-            audioCtx = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: sampleRate });
-            scriptNode = audioCtx.createScriptProcessor(1024, 1, 1);
-            let formula = document.getElementById("formula").value;
-            scriptNode.onaudioprocess = function (e) {
-                let buffer = e.outputBuffer.getChannelData(0);
-                for (let i = 0; i < buffer.length; i++, t++) {
-                    try {
-                        buffer[i] = ((eval(formula) & 255) / 128) - 1; 
-                    } catch (error) {
-                        buffer[i] = 0; 
-                    }
-                }
-            };
-            scriptNode.connect(audioCtx.destination);
+
+    <div class="footer">
+      <p>By <a href="https://youtube.com/@ciberboyyt" target="_blank">CiberBoy</a></p>
+    </div>
+  </div>
+
+  <script>
+    let audioCtx, scriptNode, t = 0, sampleRate = 8000;
+
+    function play() {
+      if (audioCtx) return;
+      sampleRate = parseInt(document.getElementById("sampleRate").value);
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: sampleRate });
+      scriptNode = audioCtx.createScriptProcessor(1024, 1, 1);
+      let formula = document.getElementById("formula").value;
+
+      scriptNode.onaudioprocess = function (e) {
+        let buffer = e.outputBuffer.getChannelData(0);
+        for (let i = 0; i < buffer.length; i++, t++) {
+          try {
+            buffer[i] = ((eval(formula) & 255) / 128) - 1;
+          } catch {
+            buffer[i] = 0;
+          }
         }
-        function stop() {
-            if (scriptNode) scriptNode.disconnect();
-            if (audioCtx) audioCtx.close();
-            audioCtx = null;
-            t = 0; 
-        }
-    </script>
+      };
+
+      scriptNode.connect(audioCtx.destination);
+    }
+
+    function stop() {
+      if (scriptNode) scriptNode.disconnect();
+      if (audioCtx) audioCtx.close();
+      audioCtx = null;
+      t = 0;
+    }
+  </script>
 </body>
 </html>
