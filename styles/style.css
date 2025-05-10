@@ -1,0 +1,117 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+  }
+  body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at center, #111, #1a1a1a, #000);
+    overflow: hidden;
+    color: #fff;
+  }
+  canvas {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+  .container {
+    position: relative;
+    z-index: 2;
+    padding: 50px;
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 0 30px rgba(255,255,255,0.05);
+    text-align: center;
+    max-width: 800px;
+    width: 90%;
+    animation: fadeIn 1.5s ease-in;
+  }
+  h1 {
+    font-size: 3.5rem;
+    color: #ffea00;
+    text-shadow: 0 0 10px #ffea00, 0 0 30px #ffea00;
+    margin-bottom: 20px;
+  }
+  label {
+    font-size: 1.2rem;
+    color: #ccc;
+    margin-top: 15px;
+    display: block;
+  }
+  textarea {
+    margin-top: 10px;
+    width: 100%;
+    height: 120px;
+    background: #111;
+    color: #37bee7;
+    font-family: monospace;
+    font-size: 16px;
+    border: 2px solid #37bee7;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #0051ff;
+    outline: none;
+    resize: none;
+  }
+  select {
+    background: #111;
+    color: #00ffff;
+    border: 2px solid #00ffff;
+    padding: 10px 20px;
+    font-size: 20px;
+    margin-top: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #00ffff;
+  }
+  .button-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+  }
+  .btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 19px;
+    cursor: pointer;
+    transition: all 0.25s ease-in-out;
+    backdrop-filter: blur(5px);
+  }
+  .btn:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow:
+      0 0 10px rgba(255, 255, 255, 0.2),
+      0 0 20px rgba(255, 255, 255, 0.3),
+      0 0 40px rgba(255, 255, 255, 0.4);
+    text-shadow: 0 0 8px white;
+  }
+  .footer {
+    margin-top: 30px;
+    font-size: 1.8rem;
+    color: #aaa;
+  }
+  .footer a {
+    color: #00ffff;
+    text-decoration: none;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @media (max-width: 600px) {
+    h1 { font-size: 2.5rem; }
+    .btn { font-size: 14px; padding: 10px 16px; }
+  }
+  

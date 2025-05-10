@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bytebeat Player by CiberBoy</title>
+  <link rel="stylesheet" href="styles/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🎵 Bytebeat Player</h1>
+    <label><strong>Type your formula below:</strong></label>
+    <textarea id="formula">t*(t&16384?6:5)*(4-(1&t>>8))>>(3&t>>8)|t>>4</textarea>
+
+    <label><strong>Sample Rate:</strong></label>
+    <select id="sampleRate">
+      <option value="8000" selected>8 kHz</option>
+      <option value="12000">12 kHz</option>
+      <option value="16000">16 kHz</option>
+      <option value="22050">22.05 kHz</option>
+      <option value="32000">32 kHz</option>
+      <option value="44100">44.1 kHz</option>
+    </select>
+
+    <div class="button-container">
+      <button class="btn" onclick="play()">▶ Play</button>
+      <button class="btn" onclick="stop()">⏹ Stop</button>
+    </div>
+
+    <div class="footer">
+      <p>By <a href="https://youtube.com/@ciberboyyt" target="_blank">CiberBoy</a></p>
+    </div>
+  </div>
+
+  <canvas id="particles"></canvas>
+  
+  <script src="scripts/script.js"></script>
+</body>
+</html>
